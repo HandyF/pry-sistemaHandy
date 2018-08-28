@@ -1,0 +1,109 @@
+<?php
+require_once 'controlador/conecta.php';
+$producto = 'SELECT
+    p.ID_PRODUCTO as Identificador, tp.DESCRIPCION, p.DESCRIPCION_PRODUCTO, p.OBSERVACION
+
+    FROM  tproducto p inner join ttipo_producto tp on   p.ID_TIPO_PRODUCTO= tp.ID_TIPO_PRODUCTO ';
+$productos = $mysqli->query($producto);
+
+if (isset($_POST['create_pdf'])) {
+    require_once 'tcpdf/tcpdf.php';
+
+    $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
+
+    $pdf->SetCreator(PDF_CREATOR);
+    $pdf->SetAuthor('Handy Andres Fierro Ortiz');
+    $pdf->SetTitle($_POST['reporte_name']);
+
+    $pdf->setPrintHeader(false);
+    $pdf->setPrintFooter(false);
+    $pdf->SetMargins(20, 20, 20, false);
+    $pdf->SetAutoPageBreak(true, 20);
+    $pdf->SetFont('Helvetica', '', 10);
+    $pdf->addPage();
+
+    $content = '';
+
+    $content .= '
+        <div class="row">
+            <div class="col-sm-8">
+                <h1 style="text-align:center;">' . $_POST['reporte_name'] . '</h1>
+
+      <table border="1" cellpadding="4">
+
+          <tr>
+            <th>Tipo Producto</th>
+            <th>Nombre del producto</th>
+            <th>Observacion del producto</th>
+          </tr>
+
+    ';
+
+    while ($produc = $productos->fetch_assoc()) {
+        $content .= '
+        <tr>
+            <td>' . $produc['DESCRIPCION'] . '</td>
+            <td>' . $produc['DESCRIPCION_PRODUCTO'] . '</td>
+            <td>' . $produc['OBSERVACION'] . '</td>
+
+        </tr>
+    ';
+    }
+
+    $content .= '</table>';
+
+    $content .= '
+        <div class="row padding">
+            <div class="col-sm-6" style="text-align:center;">
+                <span>Pdf Creator </span><a href="http://www.redecodifica.com">By Handy Andres Fierro Ortiz</a>
+            </div>
+        </div>
+
+    ';
+
+    $pdf->writeHTML($content, true, 0, true, 0);
+
+    $pdf->lastPage();
+    $pdf->output('Reporte.pdf', 'I');
+}
+?>
+
+<div class= "container" >
+<div class= "row padding" >
+
+<div class= "col-sm-6" >
+<?php $h1 = "Reporte de Productos - Enero 2018";
+echo '<h1>' . $h1 . '</h1>'
+?>
+
+            </div>
+        </div>
+      <div class="row">
+
+ <div class="table-responsive">
+      <table class="table table-hover">
+          <tr>
+            <th>Tipo Producto</th>
+            <th>Nombre del producto</th>
+            <th>Observacion del producto</th>
+          </tr>
+
+        <?php while ($produc = $productos->fetch_assoc()) {?>
+
+          <tr>
+            <td><?php echo $produc['DESCRIPCION']; ?></td>
+            <td><?php echo $produc['DESCRIPCION_PRODUCTO']; ?></td>
+            <td><?php echo $produc['OBSERVACION']; ?></td>
+          </tr>
+         <?php }?>
+
+      </table>
+       </div>
+              <div class="col-sm-6">
+                <form method="post">
+                  <input type="hidden" name="reporte_name" value="<?php echo $h1; ?>">
+                  <input type="submit" name="create_pdf" class="btn btn-danger pull-right" value="Generar PDF">
+                </form>
+              </div>
+        </div>
+    </div>

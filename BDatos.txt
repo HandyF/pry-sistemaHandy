@@ -1,0 +1,5 @@
+Base de Datos: pryTCE
+Usuario: administrador
+clave: xyz123
+
+http://localhost/sistemaHandy/index.php?control=logout

@@ -1,0 +1,135 @@
+<?php
+require_once 'controlador/conecta.php';
+$empleado = 'SELECT
+    e.ID_EMPLEADO as Identificador, te.DESCRIPCION, e.RUT_EMPLEADO,
+    e.NOMBRES_EMPLEADO, e.APELLIDOS_EMPLEADO, e.FECHA_NACIMIENTO,
+     e.DIRECCION_EMPLEADO, e.FONO_EMPLEADO, e.EMAIL_EMPLEADO
+
+    FROM  templeado e inner join  ttipo_empleado te on   e.ID_TIPO_EMPLEADO= te.ID_TIPO_EMPLEADO ';
+$empleados = $mysqli->query($empleado);
+
+if (isset($_POST['create_pdf'])) {
+    require_once 'tcpdf/tcpdf.php';
+
+    $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', true);
+
+    $pdf->SetCreator(PDF_CREATOR);
+    $pdf->SetAuthor('Handy Andres Fierro Ortiz');
+    $pdf->SetTitle($_POST['reporte_name']);
+
+    $pdf->setPrintHeader(true);
+    $pdf->setPrintFooter(true);
+    $pdf->SetMargins(20, 20, 20, false);
+    $pdf->SetAutoPageBreak(true, 20);
+    $pdf->SetFont('Helvetica', '', 10);
+    $pdf->addPage();
+
+    $content = '';
+
+    $content .= '
+        <div class="row">
+            <div class="col-sm-8">
+                <h1 style="text-align:center;">' . $_POST['reporte_name'] . '</h1>
+
+      <table border="1" cellpadding="9">
+
+          <tr>
+            <th>Codigo</th>
+            <th>Tipo Empleado</th>
+            <th>Rut</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Fecha nacimiento</th>
+            <th>Direccion</th>
+            <th>Fono</th>
+            <th>E-mail</th>
+          </tr>
+
+    ';
+
+    while ($emple = $empleados->fetch_assoc()) {
+        $content .= '
+        <tr>
+            <td>' . $emple['Identificador'] . '</td>
+            <td>' . $emple['DESCRIPCION'] . '</td>
+            <td>' . $emple['RUT_EMPLEADO'] . '</td>
+            <td>' . $emple['NOMBRES_EMPLEADO'] . '</td>
+            <td>' . $emple['APELLIDOS_EMPLEADO'] . '</td>
+            <td>' . $emple['FECHA_NACIMIENTO'] . '</td>
+            <td>' . $emple['DIRECCION_EMPLEADO'] . '</td>
+            <td>' . $emple['FONO_EMPLEADO'] . '</td>
+            <td>' . $emple['EMAIL_EMPLEADO'] . '</td>
+
+        </tr>
+    ';
+    }
+
+    $content .= '</table>';
+
+    $content .= '
+        <div class="row padding">
+            <div class="col-sm-6" style="text-align:center;">
+                <span>Pdf Creator </span><a href="http://www.redecodifica.com">By Handy Andres Fierro Ortiz</a>
+            </div>
+        </div>
+
+    ';
+
+    $pdf->writeHTML($content, true, 0, true, 0);
+
+    $pdf->lastPage();
+    $pdf->output('Reporte.pdf', 'I');
+}
+?>
+
+<div class= "container" >
+<div class= "row padding" >
+
+<div class= "col-sm-6" >
+<?php $h1 = "Reporte de Empleados - Enero 2018";
+echo '<h1>' . $h1 . '</h1>'
+?>
+
+            </div>
+        </div>
+      <div class="row">
+
+ <div class="table-responsive">
+      <table class="table table-hover">
+          <tr>
+            <th>Codigo</th>
+            <th>Tipo Empleado</th>
+            <th>Rut</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Fecha nacimiento</th>
+            <th>Direccion</th>
+            <th>Fono</th>
+            <th>E-mail</th>
+          </tr>
+
+        <?php while ($emple = $empleados->fetch_assoc()) {?>
+
+          <tr>
+            <td><?php echo $emple['Identificador']; ?></td>
+            <td><?php echo $emple['DESCRIPCION']; ?></td>
+            <td><?php echo $emple['RUT_EMPLEADO']; ?></td>
+            <td><?php echo $emple['NOMBRES_EMPLEADO']; ?></td>
+            <td><?php echo $emple['APELLIDOS_EMPLEADO']; ?></td>
+            <td><?php echo $emple['FECHA_NACIMIENTO']; ?></td>
+            <td><?php echo $emple['DIRECCION_EMPLEADO']; ?></td>
+            <td><?php echo $emple['FONO_EMPLEADO']; ?></td>
+            <td><?php echo $emple['EMAIL_EMPLEADO']; ?></td>
+          </tr>
+         <?php }?>
+
+      </table>
+       </div>
+              <div class="col-sm-6">
+                <form method="post">
+                  <input type="hidden" name="reporte_name" value="<?php echo $h1; ?>">
+                  <input type="submit" name="create_pdf" class="btn btn-danger pull-right" value="Generar PDF">
+                </form>
+              </div>
+        </div>
+    </div>

@@ -1,0 +1,4 @@
+<?php
+require 'controlador/conecta.php';
+$query     = "SELECT  ID_EMPLEADO, ID_TIPO_EMPLEADO, RUT_EMPLEADO, NOMBRES_EMPLEADO, APELLIDOS_EMPLEADO, FECHA_NACIMIENTO, DIRECCION_EMPLEADO, FONO_EMPLEADO, EMAIL_EMPLEADO  FROM templeado order by RUT_EMPLEADO ASC";
+$resultado = $mysqli->query($query);
