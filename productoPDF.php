@@ -1,6 +1,6 @@
 <?php
 require_once 'controlador/conecta.php';
-$usuario  = 'SELECT p.ID_PRODUCTO, tp.DESCRIPCION, p.DESCRIPCION_PRODUCTO, p.OBSERVACION FROM  tproducto p inner join ttipo_producto tp on   p.ID_TIPO_PRODUCTO= tp.ID_TIPO_PRODUCTO ';
+$usuario  = 'SELECT p.ID_PRODUCTO, tp.DESCRIPCION, p.NOMBRE_PRODUCTO, p.IMAGEN_PRODUCTO, p.DESCRIPCION_PRODUCTO, p.OBSERVACION_PRODUCTO FROM  tproducto p inner join ttipo_producto tp on   p.ID_TIPO_PRODUCTO= tp.ID_TIPO_PRODUCTO ';
 $usuarios = $mysqli->query($usuario);
 
 if (isset($_POST['create_pdf'])) {
@@ -32,6 +32,8 @@ if (isset($_POST['create_pdf'])) {
             <th>Codigo</th>
             <th>Tipo Producto</th>
             <th>Nombre del producto</th>
+            <th>Imagen producto</th>
+            <th>Descripcion del producto</th>
             <th>Observacion del producto</th>
           </tr>
         </thead>
@@ -43,8 +45,10 @@ if (isset($_POST['create_pdf'])) {
     <tr bgcolor="' . $color . '">
             <td>' . $user['ID_PRODUCTO'] . '</td>
            <td>' . $user['DESCRIPCION'] . '</td>
+            <td>' . $user['NOMBRE_PRODUCTO'] . '</td>
+            <td>' . $user['IMAGEN_PRODUCTO'] . '</td>
             <td>' . $user['DESCRIPCION_PRODUCTO'] . '</td>
-            <td>' . $user['OBSERVACION'] . '</td>
+            <td>' . $user['OBSERVACION_PRODUCTO'] . '</td>
         </tr>
   ';
     }
@@ -107,6 +111,8 @@ echo '<h1>' . $h1 . '</h1>'
             <th>Codigo</th>
             <th>Tipo Producto</th>
             <th>Nombre del producto</th>
+            <th>Imagen producto</th>
+            <th>Descripcion del producto</th>
             <th>Observacion del producto</th>
           </tr>
         </thead>
@@ -116,8 +122,10 @@ while ($user = $usuarios->fetch_assoc()) {?>
           <tr class="<?php if ($user['ID_PRODUCTO'] == '1') {echo 'active';} else {echo 'danger';}?>">
              <td><?php echo $user['ID_PRODUCTO']; ?></td>
             <td><?php echo $user['DESCRIPCION']; ?></td>
+            <td><?php echo $user['NOMBRE_PRODUCTO']; ?></td>
+            <td><?php echo $user['IMAGEN_PRODUCTO']; ?></td>
             <td><?php echo $user['DESCRIPCION_PRODUCTO']; ?></td>
-            <td><?php echo $user['OBSERVACION']; ?></td>
+            <td><?php echo $user['OBSERVACION_PRODUCTO']; ?></td>
           </tr>
          <?php }?>
         </tbody>

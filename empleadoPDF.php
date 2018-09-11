@@ -1,8 +1,7 @@
 <?php
 require_once 'controlador/conecta.php';
 $usuario = 'SELECT e.ID_EMPLEADO, te.DESCRIPCION, e.RUT_EMPLEADO,
-    e.NOMBRES_EMPLEADO, e.APELLIDOS_EMPLEADO, e.FECHA_NACIMIENTO,
-     e.DIRECCION_EMPLEADO, e.FONO_EMPLEADO, e.EMAIL_EMPLEADO
+    e.NOMBRES_EMPLEADO, e.APELLIDOPATER_EMPLEADO, e.APELLIDOMATER_EMPLEADO, e.FECHA_NACIMIENTO,e.GENERO_EMPLEADO, e.DIRECCION_EMPLEADO, e.FONO_EMPLEADO, e.EMAIL_EMPLEADO
 
     FROM  templeado e inner join  ttipo_empleado te on   e.ID_TIPO_EMPLEADO= te.ID_TIPO_EMPLEADO';
 $usuarios = $mysqli->query($usuario);
@@ -10,7 +9,7 @@ $usuarios = $mysqli->query($usuario);
 if (isset($_POST['create_pdf'])) {
     require_once 'tcpdf/tcpdf.php';
 
-    $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
+    $pdf = new TCPDF('P', 'mm', 'A3', true, 'UTF-8', false);
 
     $pdf->SetCreator(PDF_CREATOR);
     $pdf->SetAuthor('Handy Fierro Ortiz');
@@ -18,7 +17,7 @@ if (isset($_POST['create_pdf'])) {
 
     $pdf->setPrintHeader(false);
     $pdf->setPrintFooter(false);
-    $pdf->SetMargins(20, 20, 20, 20, false);
+    $pdf->SetMargins(10, 20, 20, 20, false);
     $pdf->SetAutoPageBreak(true, 10);
     $pdf->SetFont('Helvetica', '', 10);
     $pdf->addPage();
@@ -35,27 +34,31 @@ if (isset($_POST['create_pdf'])) {
           <tr>
             <th>Codigo</th>
             <th>Tipo Empleado</th>
-            <th>rut</th>
-            <th>nombres</th>
-            <th>apellidos</th>
-            <th>fecha nacimiento</th>
-            <th>direccion</th>
-            <th>fono</th>
-            <th>email</th>
+            <th>Rut</th>
+            <th>Nombres</th>
+            <th>Apellido Paterno</th>
+            <th>Apellido Materno</th>
+            <th>Fecha nacimiento</th>
+            <th>Genero</th>
+            <th>Direccion</th>
+            <th>Fono</th>
+            <th>E-mail</th>
           </tr>
         </thead>
   ';
 
     while ($user = $usuarios->fetch_assoc()) {
-        if ($user['ID_EMPLEADO'] == '1') {$color = '#f5f5f5';} else { $color = '#fbb2b2';}
+        if ($user['ID_EMPLEADO'] == '1') {$color = '#f5f5f5';} else { $color = '#f5f5f5';}
         $content .= '
     <tr bgcolor="' . $color . '">
             <td>' . $user['ID_EMPLEADO'] . '</td>
             <td>' . $user['DESCRIPCION'] . '</td>
             <td>' . $user['RUT_EMPLEADO'] . '</td>
             <td>' . $user['NOMBRES_EMPLEADO'] . '</td>
-            <td>' . $user['APELLIDOS_EMPLEADO'] . '</td>
+            <td>' . $user['APELLIDOPATER_EMPLEADO'] . '</td>
+            <td>' . $user['APELLIDOMATER_EMPLEADO'] . '</td>
             <td>' . $user['FECHA_NACIMIENTO'] . '</td>
+            <td>' . $user['GENERO_EMPLEADO'] . '</td>
             <td>' . $user['DIRECCION_EMPLEADO'] . '</td>
             <td>' . $user['FONO_EMPLEADO'] . '</td>
             <td>' . $user['EMAIL_EMPLEADO'] . '</td>
@@ -121,8 +124,10 @@ echo '<h1>' . $h1 . '</h1>'
             <th>Tipo Empleado</th>
             <th>Rut</th>
             <th>Nombres</th>
-            <th>Apellidos</th>
+            <th>Apellido Paterno</th>
+            <th>Apellido Materno</th>
             <th>Fecha nacimiento</th>
+            <th>Genero</th>
             <th>Direccion</th>
             <th>Fono</th>
             <th>Email</th>
@@ -136,8 +141,10 @@ while ($user = $usuarios->fetch_assoc()) {?>
             <td><?php echo $user['DESCRIPCION']; ?></td>
             <td><?php echo $user['RUT_EMPLEADO']; ?></td>
             <td><?php echo $user['NOMBRES_EMPLEADO']; ?></td>
-            <td><?php echo $user['APELLIDOS_EMPLEADO']; ?></td>
+            <td><?php echo $user['APELLIDOPATER_EMPLEADO']; ?></td>
+            <td><?php echo $user['APELLIDOMATER_EMPLEADO']; ?></td>
             <td><?php echo $user['FECHA_NACIMIENTO']; ?></td>
+            <td><?php echo $user['GENERO_EMPLEADO']; ?></td>
             <td><?php echo $user['DIRECCION_EMPLEADO']; ?></td>
             <td><?php echo $user['FONO_EMPLEADO']; ?></td>
             <td><?php echo $user['EMAIL_EMPLEADO']; ?></td>

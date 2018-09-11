@@ -1,24 +1,30 @@
 <?php
 require_once 'controlador/conecta.php';
-$usuario = 'SELECT
-r.ID_RECEPCION, e.NOMBRES_EMPLEADO + e.APELLIDOS_EMPLEADO as EmpleadoNombresyApellidos, td.DESCRIPCION, r.FECHA_HORA, r.NUMERO_TIPO_DOCUMENTO
+// $usuario = 'SELECT
+// r.ID_RECEPCION, e.NOMBRES_EMPLEADO + e.APELLIDOS_EMPLEADO as EmpleadoNombresyApellidos, td.DESCRIPCION, r.FECHA_HORA, r.NUMERO_TIPO_DOCUMENTO
 
- FROM  trecepcion r inner join templeado e on r.ID_EMPLEADO= e.ID_EMPLEADO
-       join ttipo_documento td on r.ID_TIPO_DOCUMENTO= td.ID_TIPO_DOCUMENTO';
+// FROM  trecepcion r inner join templeado e on r.ID_EMPLEADO= e.ID_EMPLEADO
+//      join ttipo_documento td on r.ID_TIPO_DOCUMENTO= td.ID_TIPO_DOCUMENTO';
 
-$detalleRecepcion = 'SELECT dr.ITEM_RECEPCION, r.FECHA_HORA,
-abp2.ID_BODEGA, abp3.ID_PRODUCTO, dr.CANTIDAD_PRODUCTO, dr.FECHA_HORA_ASIG, dr.LINEA_CODIGO
+// $detalleRecepcion = 'SELECT dr.ITEM_RECEPCION, r.FECHA_HORA,
+// abp2.ID_BODEGA, abp3.ID_PRODUCTO, dr.CANTIDAD_PRODUCTO, dr.FECHA_HORA_ASIG, dr.LINEA_CODIGO
 
- FROM  tdetalle_recepcion dr inner join trecepcion r on dr.ID_RECEPCION= r.ID_RECEPCION
-       inner join tasignacion_bodega_producto abp2 on abp2.ID_BODEGA= dr.ID_BODEGA
-       inner join tasignacion_bodega_producto abp3 on  abp3.ID_PRODUCTO= dr.ID_PRODUCTO';
+// FROM  tdetalle_recepcion dr inner join trecepcion r on dr.ID_RECEPCION= r.ID_RECEPCION
+//       inner join tasignacion_bodega_producto abp2 on abp2.ID_BODEGA= dr.ID_BODEGA
+//       inner join tasignacion_bodega_producto abp3 on  abp3.ID_PRODUCTO= dr.ID_PRODUCTO';
 
-$usuarios = $mysqli->query($usuario = $detalleRecepcion);
+// $usuarios = $mysqli->query($usuario = $detalleRecepcion);
+
+$usuario = "SELECT dr.ITEM_RECEPCION, dr.ID_RECEPCION, CONCAT(b.DESCRIPCION_BODEGA,'<br><br>',b.OBSERVACION_BODEGA)  AS ID_BODEGA , CONCAT(p.NOMBRE_PRODUCTO,'<br><br>', p.DESCRIPCION_PRODUCTO,'<br><br>', p.OBSERVACION_PRODUCTO) as ID_PRODUCTO , dr.FECHA_HORA_ASIG, dr.CANTIDAD_PRODUCTO, dr.LINEA_CODIGO
+       FROM  tdetalle_recepcion dr inner join tbodega b on b.ID_BODEGA= dr.ID_BODEGA
+       inner join tproducto p on  p.ID_PRODUCTO= dr.ID_PRODUCTO";
+
+$usuarios = $mysqli->query($usuario);
 
 if (isset($_POST['create_pdf'])) {
     require_once 'tcpdf/tcpdf.php';
 
-    $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
+    $pdf = new TCPDF('P', 'mm', 'A3', true, 'UTF-8', false);
 
     $pdf->SetCreator(PDF_CREATOR);
     $pdf->SetAuthor('Handy Fierro Ortiz');
@@ -41,31 +47,27 @@ if (isset($_POST['create_pdf'])) {
       <table border="1" cellpadding="2">
         <thead>
           <tr>
-            <th>ItemRecepcion</th>
-            <th>Fecha Recepcion</th>
+            <th>Item Recepcion</th>
+            <th>Recepcion</th>
             <th>Bodega</th>
             <th>Producto</th>
+            <th>Fecha Recepcion</th>
             <th>Cantidad producto</th>
-            <th>Empleado</th>
-            <th>Tipo Documento</th>
-            <th>Nº tipo documento</th>
             <th>Linea codigo</th>
           </tr>
         </thead>
   ';
 
     while ($user = $usuarios->fetch_assoc()) {
-        if ($user['ID_RECEPCION'] == '1') {$color = '#f5f5f5';} else { $color = '#fbb2b2';}
+        if ($user['ID_RECEPCION'] == '1') {$color = '#f5f5f5';} else { $color = '#f5f5f5';}
         $content .= '
     <tr bgcolor="' . $color . '">
             <td>' . $user['ITEM_RECEPCION'] . '</td>
-            <td>' . $user['FECHA_HORA'] . '</td>
+            <td>' . $user['ID_RECEPCION'] . '</td>
             <td>' . $user['ID_BODEGA'] . '</td>
             <td>' . $user['ID_PRODUCTO'] . '</td>
+            <td>' . $user['FECHA_HORA_ASIG'] . '</td>
             <td>' . $user['CANTIDAD_PRODUCTO'] . '</td>
-            <td>' . $user['EmpleadoNombresyApellidos'] . '</td>
-            <td>' . $user['DESCRIPCION'] . '</td>
-            <td>' . $user['NUMERO_TIPO_DOCUMENTO'] . '</td>
             <td>' . $user['LINEA_CODIGO'] . '</td>
         </tr>
   ';
@@ -126,14 +128,12 @@ echo '<h1>' . $h1 . '</h1>'
       <table class="table table-hover">
         <thead>
           <tr>
-            <th>ItemRecepcion</th>
-            <th>Fecha Recepcion</th>
+            <th>Item Recepcion</th>
+            <th>Recepcion</th>
             <th>Bodega</th>
             <th>Producto</th>
+            <th>Fecha Recepcion</th>
             <th>Cantidad producto</th>
-            <th>Empleado</th>
-            <th>Tipo Documento</th>
-            <th>Nº tipo documento</th>
             <th>Linea codigo</th>
           </tr>
         </thead>
@@ -142,13 +142,11 @@ echo '<h1>' . $h1 . '</h1>'
 while ($user = $usuarios->fetch_assoc()) {?>
           <tr class="<?php if ($user['ID_RECEPCION'] == '1') {echo 'active';} else {echo 'danger';}?>">
             <td><?php echo $user['ITEM_RECEPCION']; ?></td>
-            <td><?php echo $user['FECHA_HORA']; ?></td>
+            <td><?php echo $user['ID_RECEPCION']; ?></td>
             <td><?php echo $user['ID_BODEGA']; ?></td>
             <td><?php echo $user['ID_PRODUCTO']; ?></td>
+            <td><?php echo $user['FECHA_HORA_ASIG']; ?></td>
             <td><?php echo $user['CANTIDAD_PRODUCTO']; ?></td>
-            <td><?php echo $user['EmpleadoNombresyApellidos']; ?></td>
-            <td><?php echo $user['DESCRIPCION']; ?></td>
-            <td><?php echo $user['NUMERO_TIPO_DOCUMENTO']; ?></td>
             <td><?php echo $user['LINEA_CODIGO']; ?></td>
           </tr>
          <?php }?>

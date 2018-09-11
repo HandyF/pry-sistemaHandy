@@ -1,15 +1,14 @@
 <?php
 require_once 'controlador/conecta.php';
-$usuario = 'SELECT
-b.DESCRIPCION_BODEGA, p.DESCRIPCION_PRODUCTO, abp.FECHA_HORA_ASIG, abp.CANTIDAD_PRODUCTO, abp.OBSERVACION
- FROM tasignacion_bodega_producto abp inner join tbodega b on abp.ID_BODEGA= b.ID_BODEGA                            inner join tproducto p on abp.ID_PRODUCTO= p.ID_PRODUCTO';
+$usuario = "SELECT CONCAT(b.DESCRIPCION_BODEGA,'<br><br>' ,b.OBSERVACION_BODEGA) as DESCRIPCION_BODEGA, CONCAT( p.NOMBRE_PRODUCTO ,'<br><br>',  p.DESCRIPCION_PRODUCTO ,'<br><br>' ,p.OBSERVACION_PRODUCTO) AS NOMBRE_PRODUCTO, abp.FECHA_HORA_ASIG, abp.CANTIDAD_PRODUCTO, abp.OBSERVACION
+ FROM tasignacion_bodega_producto abp inner join tbodega b on abp.ID_BODEGA= b.ID_BODEGA                            inner join tproducto p on abp.ID_PRODUCTO= p.ID_PRODUCTO";
 
 $usuarios = $mysqli->query($usuario);
 
 if (isset($_POST['create_pdf'])) {
     require_once 'tcpdf/tcpdf.php';
 
-    $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
+    $pdf = new TCPDF('P', 'mm', 'A3', true, 'UTF-8', false);
 
     $pdf->SetCreator(PDF_CREATOR);
     $pdf->SetAuthor('Handy Fierro Ortiz');
@@ -17,7 +16,7 @@ if (isset($_POST['create_pdf'])) {
 
     $pdf->setPrintHeader(false);
     $pdf->setPrintFooter(false);
-    $pdf->SetMargins(20, 20, 20, 20, false);
+    $pdf->SetMargins(15, 15, 15, 15, false);
     $pdf->SetAutoPageBreak(true, 10);
     $pdf->SetFont('Helvetica', '', 10);
     $pdf->addPage();
@@ -26,7 +25,7 @@ if (isset($_POST['create_pdf'])) {
 
     $content .= '
     <div class="row">
-          <div class="col-md-12">
+          <div class="col-sm-12">
               <h1 style="text-align:center;">' . $_POST['reporte_name'] . '</h1>
 
       <table border="1" cellpadding="2">
@@ -42,11 +41,11 @@ if (isset($_POST['create_pdf'])) {
   ';
 
     while ($user = $usuarios->fetch_assoc()) {
-        if ($user['ID_SOLICITUD'] == '1') {$color = '#f5f5f5';} else { $color = '#fbb2b2';}
+        if ($user['DESCRIPCION_BODEGA'] == '1') {$color = '#f5f5f5';} else { $color = '#f5f5f5';}
         $content .= '
     <tr bgcolor="' . $color . '">
             <td>' . $user['DESCRIPCION_BODEGA'] . '</td>
-            <td>' . $user['DESCRIPCION_PRODUCTO'] . '</td>
+            <td>' . $user['NOMBRE_PRODUCTO'] . '</td>
             <td>' . $user['FECHA_HORA_ASIG'] . '</td>
             <td>' . $user['CANTIDAD_PRODUCTO'] . '</td>
             <td>' . $user['OBSERVACION'] . '</td>
@@ -58,7 +57,7 @@ if (isset($_POST['create_pdf'])) {
 
     $content .= '
     <div class="row padding">
-          <div class="col-md-12" style="text-align:center;">
+          <div class="col-sm-12" style="text-align:center;">
               <span>Pdf Creado por Handy </span>
             </div>
         </div>
@@ -99,7 +98,7 @@ include 'vista/menuSolicitud.view.php';
 ?>
 
         </div>
-          <div class="col-md-12">
+          <div class="col-sm-12">
               <?php $h1 = "Reporte de Asignacion bodega productos";
 echo '<h1>' . $h1 . '</h1>'
 ?>
@@ -119,9 +118,9 @@ echo '<h1>' . $h1 . '</h1>'
         <tbody>
         <?php
 while ($user = $usuarios->fetch_assoc()) {?>
-          <tr class="<?php if ($user['ID_SOLICITUD'] == '1') {echo 'active';} else {echo 'danger';}?>">
+          <tr class="<?php if ($user['DESCRIPCION_BODEGA'] == '1') {echo 'active';} else {echo 'danger';}?>">
             <td><?php echo $user['DESCRIPCION_BODEGA']; ?></td>
-            <td><?php echo $user['DESCRIPCION_PRODUCTO']; ?></td>
+            <td><?php echo $user['NOMBRE_PRODUCTO']; ?></td>
             <td><?php echo $user['FECHA_HORA_ASIG']; ?></td>
             <td><?php echo $user['CANTIDAD_PRODUCTO']; ?></td>
             <td><?php echo $user['OBSERVACION']; ?></td>
@@ -129,7 +128,7 @@ while ($user = $usuarios->fetch_assoc()) {?>
          <?php }?>
         </tbody>
       </table>
-              <div class="col-md-12">
+              <div class="col-sm-12">
                 <form method="post">
                   <input type="hidden" name="reporte_name" value="<?php echo $h1; ?>">
                   <input type="submit" name="create_pdf" class="btn btn-danger pull-right" value="Generar PDF">

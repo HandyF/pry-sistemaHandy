@@ -1,14 +1,19 @@
 <?php
 require_once 'controlador/conecta.php';
-$usuario = 'SELECT s.ID_SALIDA, d.DESCRIPCION_DESTINO, e.NOMBRES_EMPLEADO + e.APELLIDOS_EMPLEADO as EmpleadoNombresyApellidos, s.FECHA_HORA
-FROM  tsalida s inner join tdestino d on s.ID_DESTINO= d.ID_DESTINO
-                       join templeado e  on s.ID_EMPLEADO= e.ID_EMPLEADO ';
+//$usuario = 'SELECT s.ID_SALIDA, d.DESCRIPCION_DESTINO, e.NOMBRES_EMPLEADO + e.APELLIDOS_EMPLEADO as EmpleadoNombresyApellidos, s.FECHA_HORA
+//FROM  tsalida s inner join tdestino d on s.ID_DESTINO= d.ID_DESTINO
+//                       join templeado e  on s.ID_EMPLEADO= e.ID_EMPLEADO ';
 
-$detalleSalida = 'SELECT ds.ITEM_SALIDA, s.FECHA_HORA, abp.ID_PRODUCTO, abp1.ID_BODEGA, ds.FECHA_HORA_ASIG, ds.CANTIDAD_PRODUCTO FROM  tdetalle_salida ds inner join tsalida s on ds.ID_SALIDA= s.ID_SALIDA
-       inner join tasignacion_bodega_producto abp on  abp.ID_PRODUCTO= ds.ID_PRODUCTO
-       inner join tasignacion_bodega_producto abp1 on abp1.ID_BODEGA= ds.ID_BODEGA';
+//$detalleSalida = 'SELECT ds.ITEM_SALIDA, s.FECHA_HORA, abp.ID_PRODUCTO, abp1.ID_BODEGA, ds.FECHA_HORA_ASIG, ds.CANTIDAD_PRODUCTO FROM  tdetalle_salida ds inner join tsalida s on ds.ID_SALIDA= s.ID_SALIDA
+//       inner join tasignacion_bodega_producto abp on  abp.ID_PRODUCTO= ds.ID_PRODUCTO
+//       inner join tasignacion_bodega_producto abp1 on abp1.ID_BODEGA= ds.ID_BODEGA';
 
-$usuarios = $mysqli->query($usuario = $detalleSalida);
+//$usuarios = $mysqli->query($usuario = $detalleSalida);
+
+$usuario = "SELECT ds.ITEM_SALIDA, s.FECHA_HORA, abp.ID_PRODUCTO, abp1.ID_BODEGA, ds.FECHA_HORA_ASIG, ds.CANTIDAD_PRODUCTO FROM  tdetalle_salida ds inner join tsalida s on ds.ID_SALIDA= s.ID_SALIDA
+       inner join tasignacion_bodega_producto abp on  abp.ID_PRODUCTO= ds.ID_PRODUCTO       inner join tasignacion_bodega_producto abp1 on abp1.ID_BODEGA= ds.ID_BODEGA";
+
+$usuarios = $mysqli->query($usuario);
 
 if (isset($_POST['create_pdf'])) {
     require_once 'tcpdf/tcpdf.php';
@@ -36,7 +41,7 @@ if (isset($_POST['create_pdf'])) {
       <table border="1" cellpadding="2">
         <thead>
           <tr>
-            <th>ItemSalida</th>
+            <th>Item Salida</th>
             <th>Fecha Salida</th>
             <th>Destino</th>
             <th>Producto</th>
@@ -48,7 +53,7 @@ if (isset($_POST['create_pdf'])) {
   ';
 
     while ($user = $usuarios->fetch_assoc()) {
-        if ($user['ID_SALIDA'] == '1') {$color = '#f5f5f5';} else { $color = '#fbb2b2';}
+        if ($user['ID_SALIDA'] == '1') {$color = '#f5f5f5';} else { $color = '#f5f5f5';}
         $content .= '
     <tr bgcolor="' . $color . '">
             <td>' . $user['ITEM_SALIDA'] . '</td>
@@ -57,7 +62,6 @@ if (isset($_POST['create_pdf'])) {
             <td>' . $user['ID_PRODUCTO'] . '</td>
             <td>' . $user['ID_BODEGA'] . '</td>
             <td>' . $user['CANTIDAD_PRODUCTO'] . '</td>
-            <td>' . $user['EmpleadoNombresyApellidos'] . '</td>
         </tr>
   ';
     }
@@ -117,13 +121,12 @@ echo '<h1>' . $h1 . '</h1>'
       <table class="table table-hover">
         <thead>
           <tr>
-            <th>ItemSalida</th>
+            <th>Item Salida</th>
             <th>Fecha Salida</th>
             <th>Destino</th>
             <th>Producto</th>
             <th>Bodega</th>
             <th>Cantidad Producto</th>
-            <th>Empleado</th>
           </tr>
         </thead>
         <tbody>
@@ -136,7 +139,6 @@ while ($user = $usuarios->fetch_assoc()) {?>
             <td><?php echo $user['ID_PRODUCTO']; ?></td>
             <td><?php echo $user['ID_BODEGA']; ?></td>
             <td><?php echo $user['CANTIDAD_PRODUCTO']; ?></td>
-            <td><?php echo $user['EmpleadoNombresyApellidos']; ?></td>
           </tr>
          <?php }?>
         </tbody>
