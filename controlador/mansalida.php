@@ -57,17 +57,21 @@ if (isset($_SESSION['usuario'])) {
     }
     //cargando los tipos de usuarios que hay en la tabla ttipousuario
     include 'controlador/conecta.php';
-    $sql = "SELECT ID_SALIDA as Identificador, ID_DESTINO, ID_EMPLEADO, FECHA_HORA FROM tsalida";
+    //  $sql = "SELECT ID_SALIDA, ID_DESTINO, ID_EMPLEADO, FECHA_HORA FROM tsalida";
 
-    $sqlDetalle = "SELECT ds.ITEM_SALIDA, s.FECHA_HORA, abp.ID_PRODUCTO, abp1.ID_BODEGA, ds.FECHA_HORA_ASIG, ds.CANTIDAD_PRODUCTO FROM  tdetalle_salida ds inner join tsalida s on ds.ID_SALIDA= s.ID_SALIDA
-       inner join tasignacion_bodega_producto abp on  abp.ID_PRODUCTO= ds.ID_PRODUCTO
-       inner join tasignacion_bodega_producto abp1 on abp1.ID_BODEGA= ds.ID_BODEGA";
+    //  $sqlDetalle = "SELECT ds.ITEM_SALIDA, s.FECHA_HORA, abp.ID_PRODUCTO, abp1.ID_BODEGA, ds.FECHA_HORA_ASIG, ds.CANTIDAD_PRODUCTO FROM  tdetalle_salida ds inner join tsalida s on ds.ID_SALIDA= s.ID_SALIDA
+    //   inner join tasignacion_bodega_producto abp on  abp.ID_PRODUCTO= ds.ID_PRODUCTO
+    //   inner join tasignacion_bodega_producto abp1 on abp1.ID_BODEGA= ds.ID_BODEGA";
 
-    $rs = $mysqli->query($sql = $sqlDetalle);
+    //  $rs = $mysqli->query($sql = $sqlDetalle);
+
+    $sqlDetalle = "SELECT ITEM_SALIDA, ID_SALIDA, ID_PRODUCTO, ID_BODEGA, FECHA_HORA_ASIG, CANTIDAD_PRODUCTO, LINEA_CODIGO FROM  tdetalle_salida";
+
+    $rs = $mysqli->query($sqlDetalle);
 
     include 'vista/mansalida.view.php';
 } else {
-    echo "<p class=\"no_validado\">" . "Por favor Inicia Sesion" . "</p>";
+    echo " <p class= \"no_validado\">" . "Por favor Inicia Sesion" . "</p>";
     include 'vista/login.view.php';
 }
 ?>

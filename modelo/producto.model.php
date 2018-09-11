@@ -7,6 +7,8 @@ class Producto//class Usuario
 {
     public $id;
     public $TipoProducto;
+    public $Nombre;
+    public $Imagen;
     public $Descripcion;
     public $observacion;
 
@@ -15,7 +17,7 @@ class Producto//class Usuario
 
     }
 
-    public function guardar($TipoProducto, $Descripcion, $observacion)
+    public function guardar($TipoProducto, $Nombre, $Imagen, $Descripcion, $observacion)
     {
         $mysqli = new mysqli("localhost", "Handy", "12345", "gestionbodega1");
         /* comprobar la conexión */
@@ -23,7 +25,7 @@ class Producto//class Usuario
             printf("Falló la conexión: %s\n", $mysqli->connect_error);
             exit();
         }
-        $consulta = "INSERT INTO tproducto (ID_PRODUCTO, ID_TIPO_PRODUCTO, DESCRIPCION_PRODUCTO,     OBSERVACION) value (null,'" . $TipoProducto . "','" . $Descripcion . "','" . $observacion . "')";
+        $consulta = "INSERT INTO tproducto (ID_PRODUCTO, ID_TIPO_PRODUCTO, NOMBRE_PRODUCTO, IMAGEN_PRODUCTO, DESCRIPCION_PRODUCTO, OBSERVACION_PRODUCTO) value (null,'" . $TipoProducto . "','" . $Nombre . "','" . $Imagen . "','" . $Descripcion . "','" . $observacion . "')";
         $res      = $mysqli->query($consulta);
         if ($res) {
             return true;
@@ -32,10 +34,10 @@ class Producto//class Usuario
         }
     }
 
-    public function actualiza($id, $TipoProducto, $Descripcion, $observacion)
+    public function actualiza($id, $TipoProducto, $Nombre, $Imagen, $Descripcion, $observacion)
     {
         include 'controlador/conecta.php';
-        $consulta = "UPDATE tproducto SET ID_TIPO_PRODUCTO='" . $TipoProducto . "', DESCRIPCION_PRODUCTO='" . $Descripcion . "', OBSERVACION='" . $observacion . "' WHERE ID_PRODUCTO=" . $id;
+        $consulta = "UPDATE tproducto SET ID_TIPO_PRODUCTO='" . $TipoProducto . "', NOMBRE_PRODUCTO='" . $Nombre . "', IMAGEN_PRODUCTO='" . $Imagen . "', DESCRIPCION_PRODUCTO='" . $Descripcion . "', OBSERVACION_PRODUCTO='" . $observacion . "' WHERE ID_PRODUCTO=" . $id;
         $res      = $mysqli->query($consulta);
         if ($res) {
             return true;

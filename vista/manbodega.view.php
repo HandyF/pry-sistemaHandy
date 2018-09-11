@@ -55,6 +55,13 @@ endwhile;
                     </tr>
 
                     <tr>
+                        <th>Observacion Bodega &nbsp;</th>
+                        <td><textarea type="text" rows="5" name="observacion" id="observacion" maxlength="250" required placeholder="Digite observacion de la Bodega" class="form-control" onpaste="return false"></textarea> </td>
+
+                    </tr>
+
+
+                    <tr>
                         <td align="center">
                             <input type="reset" name="limpiar" value="Cancelar" class="btn btn-default">
                         </td>
@@ -76,7 +83,7 @@ endwhile;
                     <th>Tipo Bodega</th>
                     <th>Empleado</th>
                     <th>Descripci&oacute;n</th>
-
+                    <th>Observaci&oacute;n</th>
                     <th colspan="2">Acciones</th>
                 </tr>
 
@@ -88,8 +95,9 @@ while ($row = mysqli_fetch_array($rs)) {
                                 <td><?php echo $row['ID_TIPO_BODEGA'] ?></td>
                                 <td><?php echo $row['ID_EMPLEADO'] ?></td>
                                 <td><?php echo $row['DESCRIPCION_BODEGA'] ?></td>
+                                <td><?php echo $row['OBSERVACION_BODEGA'] ?></td>
 
-                                <td><button class="btn btn-success" onclick="moverBodega(<?php echo $row['Identificador'] ?>,'<?php echo $row['ID_TIPO_BODEGA'] ?>', '<?php echo $row['ID_EMPLEADO'] ?>', '<?php echo $row['DESCRIPCION_BODEGA'] ?>')">Modificar <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button></td>
+                                <td><button class="btn btn-success" onclick="moverBodega(<?php echo $row['Identificador'] ?>,'<?php echo $row['ID_TIPO_BODEGA'] ?>', '<?php echo $row['ID_EMPLEADO'] ?>', '<?php echo $row['DESCRIPCION_BODEGA'] ?>', '<?php echo $row['OBSERVACION_BODEGA'] ?>')">Modificar <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button></td>
                                 <td><button class="btn btn-danger" onclick="eliminaBodega(<?php echo $row['Identificador'] ?>)">Eliminar <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
                             </tr>
                             <?php

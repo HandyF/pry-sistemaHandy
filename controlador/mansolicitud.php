@@ -36,9 +36,8 @@ if (isset($_SESSION['usuario'])) {
             include 'modelo/solicitud.model.php';
             $Solicitudregistro = new Solicitud();
 
-            $id       = $_POST['idSolicitud'];
-            $Empleado = $_POST['Empleado'];
-            //  $fechaHora   = $_POST['fechaHora'];
+            $id          = $_POST['idSolicitud'];
+            $Empleado    = $_POST['Empleado'];
             $observacion = $_POST['observacion'];
 
             $itemSolicit = $_POST['itemSolicit'];
@@ -55,16 +54,15 @@ if (isset($_SESSION['usuario'])) {
     }
     //cargando los tipos de usuarios que hay en la tabla ttipousuario
     include 'controlador/conecta.php';
-    $sql = "SELECT ID_SOLICITUD  as Identificador, ID_EMPLEADO, FECHA_HORA, OBSERVACION FROM tsolicitud";
+    // $sql = "SELECT ID_SOLICITUD, ID_EMPLEADO, FECHA_HORA, OBSERVACION_SOLICITUD FROM tsolicitud";
 
-    //  $sqlDetalle = "SELECT dst.ITEM_SOLICITUD, st.FECHA_HORA, p.DESCRIPCION_PRODUCTO, dst.FECHA_HORA_ASIG, dst.CANTIDAD_PRODUCTO, dst.LINEA_CODIGO FROM tdetalle_solicitud dst inner join tsolicitud st on dst.ID_SOLICITUD= st.ID_SOLICITUD
-    // inner join tproducto p on dst.ID_PRODUCTO= p.ID_PRODUCTO";
+    //   $sqlDetalle = "SELECT ITEM_SOLICITUD, ID_SOLICITUD, ID_PRODUCTO, FECHA_HORA_ASIG, CANTIDAD_PRODUCTO, LINEA_CODIGO FROM tdetalle_solicitud";
 
     //  $rs = $mysqli->query($sql = $sqlDetalle);
 
     $sqlDetalle = "SELECT ITEM_SOLICITUD, ID_SOLICITUD, ID_PRODUCTO, FECHA_HORA_ASIG, CANTIDAD_PRODUCTO, LINEA_CODIGO FROM tdetalle_solicitud";
 
-    $rs = $mysqli->query($sql = $sqlDetalle);
+    $rs = $mysqli->query($sqlDetalle);
 
     include 'vista/mansolicitud.view.php';
 } else {
@@ -72,3 +70,5 @@ if (isset($_SESSION['usuario'])) {
     include 'vista/login.view.php';
 }
 ?>
+
+

@@ -20,13 +20,15 @@ if (isset($_SESSION['usuario'])) {
             $TipoEmpleado    = $_POST['TipoEmpleado'];
             $rut             = $_POST['rut'];
             $nombres         = $_POST['nombres'];
-            $apellidos       = $_POST['apellidos'];
+            $apellidoPater   = $_POST['apellidoPater'];
+            $apellidoMater   = $_POST['apellidoMater'];
             $fechaNacimiento = $_POST['fechaNacimiento'];
+            $genero          = $_POST['genero'];
             $direccion       = $_POST['direccion'];
             $fono            = $_POST['fono'];
             $mail            = $_POST['mail'];
 
-            $flag = $Empleadoregistro->guardar($TipoEmpleado, $rut, $nombres, $apellidos, $fechaNacimiento, $direccion, $fono, $mail);
+            $flag = $Empleadoregistro->guardar($TipoEmpleado, $rut, $nombres, $apellidoPater, $apellidoMater, $fechaNacimiento, $genero, $direccion, $fono, $mail);
             if (!$flag) {
                 echo "<script>alert('No se puede guardar el empleado, comuniquese con el administrador')</script>";
             }
@@ -39,13 +41,15 @@ if (isset($_SESSION['usuario'])) {
             $TipoEmpleado    = $_POST['TipoEmpleado'];
             $rut             = $_POST['rut'];
             $nombres         = $_POST['nombres'];
-            $apellidos       = $_POST['apellidos'];
+            $apellidoPater   = $_POST['apellidoPater'];
+            $apellidoMater   = $_POST['apellidoMater'];
             $fechaNacimiento = $_POST['fechaNacimiento'];
+            $genero          = $_POST['genero'];
             $direccion       = $_POST['direccion'];
             $fono            = $_POST['fono'];
             $mail            = $_POST['mail'];
 
-            $flag = $Empleadoregistro->actualiza($id, $TipoEmpleado, $rut, $nombres, $apellidos, $fechaNacimiento, $direccion, $fono, $mail);
+            $flag = $Empleadoregistro->actualiza($id, $TipoEmpleado, $rut, $nombres, $apellidoPater, $apellidoMater, $fechaNacimiento, $genero, $direccion, $fono, $mail);
             if (!$flag) {
                 echo "<script>alert('No se puede actualizar el empleado, comuniquese con el administrador')</script>";
             }
@@ -53,7 +57,7 @@ if (isset($_SESSION['usuario'])) {
     }
     //cargando los tipos de usuarios que hay en la tabla ttipousuario
     include 'controlador/conecta.php';
-    $sql = "SELECT ID_EMPLEADO as Identificador, ID_TIPO_EMPLEADO, RUT_EMPLEADO, NOMBRES_EMPLEADO, APELLIDOS_EMPLEADO, FECHA_NACIMIENTO, DIRECCION_EMPLEADO, FONO_EMPLEADO, EMAIL_EMPLEADO FROM templeado";
+    $sql = "SELECT ID_EMPLEADO as Identificador, ID_TIPO_EMPLEADO, RUT_EMPLEADO, NOMBRES_EMPLEADO, APELLIDOPATER_EMPLEADO, APELLIDOMATER_EMPLEADO, FECHA_NACIMIENTO, GENERO_EMPLEADO, DIRECCION_EMPLEADO, FONO_EMPLEADO, EMAIL_EMPLEADO FROM templeado";
     $rs  = $mysqli->query($sql);
 
     // $sql = " SELECT

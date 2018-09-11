@@ -9,8 +9,10 @@ class Empleado//class Usuario
     public $TipoEmpleado; //public $contrasenia;
     public $rut; //public $nombres;
     public $nombres; //public $apellidos;
-    public $apellidos; //public $direccion;
+    public $apellidoPater; //public $direccion;
+    public $apellidoMater; //public $direccion;
     public $fechaNacimiento; //public $fono;
+    public $genero;
     public $direccion; //public $mail;
     public $fono; //public $fechaCreacion;
     public $mail; //public $fechaModifica;
@@ -22,7 +24,7 @@ class Empleado//class Usuario
 
     }
 
-    public function guardar($TipoEmpleado, $rut, $nombres, $apellidos, $fechaNacimiento, $direccion, $fono, $mail)
+    public function guardar($TipoEmpleado, $rut, $nombres, $apellidoPater, $apellidoMater, $fechaNacimiento, $genero, $direccion, $fono, $mail)
     {
         $mysqli = new mysqli("localhost", "Handy", "12345", "gestionbodega1");
         /* comprobar la conexión */
@@ -31,7 +33,7 @@ class Empleado//class Usuario
             exit();
         }
 
-        $consulta = "INSERT INTO templeado (ID_EMPLEADO, ID_TIPO_EMPLEADO, RUT_EMPLEADO, NOMBRES_EMPLEADO, APELLIDOS_EMPLEADO, FECHA_NACIMIENTO, DIRECCION_EMPLEADO, FONO_EMPLEADO, EMAIL_EMPLEADO) value (null,'" . $TipoEmpleado . "','" . $rut . "','" . $nombres . "','" . $apellidos . "','" . $fechaNacimiento . "','" . $direccion . "','" . $fono . "','" . $mail . "')";
+        $consulta = "INSERT INTO templeado (ID_EMPLEADO, ID_TIPO_EMPLEADO, RUT_EMPLEADO, NOMBRES_EMPLEADO, APELLIDOPATER_EMPLEADO, APELLIDOMATER_EMPLEADO, FECHA_NACIMIENTO, GENERO_EMPLEADO, DIRECCION_EMPLEADO, FONO_EMPLEADO, EMAIL_EMPLEADO) value (null,'" . $TipoEmpleado . "','" . $rut . "','" . $nombres . "','" . $apellidoPater . "','" . $apellidoMater . "','" . $fechaNacimiento . "','" . $genero . "','" . $direccion . "','" . $fono . "','" . $mail . "')";
         $res      = $mysqli->query($consulta);
         if ($res) {
             return true;
@@ -40,10 +42,10 @@ class Empleado//class Usuario
         }
     }
 
-    public function actualiza($id, $TipoEmpleado, $rut, $nombres, $apellidos, $fechaNacimiento, $direccion, $fono, $mail)
+    public function actualiza($id, $TipoEmpleado, $rut, $nombres, $apellidoPater, $apellidoMater, $fechaNacimiento, $genero, $direccion, $fono, $mail)
     {
         include 'controlador/conecta.php';
-        $consulta = "UPDATE templeado SET ID_TIPO_EMPLEADO='" . $TipoEmpleado . "',RUT_EMPLEADO='" . $rut . "', NOMBRES_EMPLEADO='" . $nombres . "',APELLIDOS_EMPLEADO='" . $apellidos . "',FECHA_NACIMIENTO='" . $fechaNacimiento . "',DIRECCION_EMPLEADO='" . $direccion . "',FONO_EMPLEADO='" . $fono . "', EMAIL_EMPLEADO='" . $mail . "' WHERE ID_EMPLEADO=" . $id;
+        $consulta = "UPDATE templeado SET ID_TIPO_EMPLEADO='" . $TipoEmpleado . "',RUT_EMPLEADO='" . $rut . "', NOMBRES_EMPLEADO='" . $nombres . "',APELLIDOPATER_EMPLEADO='" . $apellidoPater . "',APELLIDOMATER_EMPLEADO='" . $apellidoMater . "',FECHA_NACIMIENTO='" . $fechaNacimiento . "',GENERO_EMPLEADO='" . $genero . "',DIRECCION_EMPLEADO='" . $direccion . "',FONO_EMPLEADO='" . $fono . "', EMAIL_EMPLEADO='" . $mail . "' WHERE ID_EMPLEADO=" . $id;
         $res      = $mysqli->query($consulta);
         if ($res) {
             return true;

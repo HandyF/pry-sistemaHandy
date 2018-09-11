@@ -133,7 +133,8 @@ if ($_SESSION['tipouser'] == 1) {
 
 <?PHP
 
-if (is_null($_SESSION['usuario'])) {; //en esta linea sale error pero nose porque o como solucionar.(usuario)
+if (!isset($_SESSION['usuario'])) {; //en esta linea sale error pero nose porque o como solucionar.(usuario) 
+  // cambie funcion de is_null a !isset();
     ?>
   <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -169,7 +170,7 @@ if (is_null($_SESSION['usuario'])) {; //en esta linea sale error pero nose porqu
 
 <?PHP
 
-if ($_SESSION['tipouser'] == 2) {
+if (isset($_SESSION['tipouser']) && $_SESSION['tipouser'] == 2) {
     ;
 //en esta linea sale error pero nose porque o como solucionar.
     ?>

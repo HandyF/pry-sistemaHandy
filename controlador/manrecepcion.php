@@ -59,17 +59,21 @@ if (isset($_SESSION['usuario'])) {
     }
     //cargando los tipos de usuarios que hay en la tabla ttipousuario
     include 'controlador/conecta.php';
-    $sql = "SELECT ID_RECEPCION as Identificador, ID_EMPLEADO, ID_TIPO_DOCUMENTO, FECHA_HORA, NUMERO_TIPO_DOCUMENTO
+    // $sql = "SELECT ID_RECEPCION, ID_EMPLEADO, ID_TIPO_DOCUMENTO, FECHA_HORA, NUMERO_TIPO_DOCUMENTO
 
- FROM  trecepcion ";
+    //FROM  trecepcion ";
 
-    $sqlDetalle = "SELECT dr.ITEM_RECEPCION, r.FECHA_HORA,
-abp2.ID_BODEGA, abp3.ID_PRODUCTO, dr.CANTIDAD_PRODUCTO, dr.LINEA_CODIGO
+    //  $sqlDetalle = "SELECT dr.ITEM_RECEPCION, r.FECHA_HORA,
+    // abp2.ID_BODEGA, abp3.ID_PRODUCTO, dr.CANTIDAD_PRODUCTO, dr.LINEA_CODIGO
 
- FROM  tdetalle_recepcion dr inner join trecepcion r on dr.ID_RECEPCION= r.ID_RECEPCION
-       inner join tasignacion_bodega_producto abp2 on abp2.ID_BODEGA= dr.ID_BODEGA
-       inner join tasignacion_bodega_producto abp3 on  abp3.ID_PRODUCTO= dr.ID_PRODUCTO";
-    $rs = $mysqli->query($sql = $sqlDetalle);
+// FROM  tdetalle_recepcion dr inner join trecepcion r on dr.ID_RECEPCION= r.ID_RECEPCION
+    //       inner join tasignacion_bodega_producto abp2 on abp2.ID_BODEGA= dr.ID_BODEGA
+    //       inner join tasignacion_bodega_producto abp3 on  abp3.ID_PRODUCTO= dr.ID_PRODUCTO";
+    //    $rs = $mysqli->query($sql = $sqlDetalle);
+
+    $sqlDetalle = "SELECT ITEM_RECEPCION, ID_RECEPCION, ID_BODEGA, ID_PRODUCTO, FECHA_HORA_ASIG, CANTIDAD_PRODUCTO, LINEA_CODIGO FROM tdetalle_recepcion";
+
+    $rs = $mysqli->query($sqlDetalle);
 
     include 'vista/manrecepcion.view.php';
 } else {

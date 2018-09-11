@@ -12,7 +12,7 @@ include 'controlador/fecha.php';
 <br>
   <div class="btn-group btn-group-justified" role="group">
          <div class="fecha pull-right">
-            <label>Fecha actual &nbsp;&nbsp;</label>
+            <label>Fecha actual &nbsp;</label>
                     <i class="glyphicon glyphicon-calendar"></i>
                     <span><?php echo "$dia - $diaN de $mes , $anio " ?></span>
                 </div></div>
@@ -23,18 +23,23 @@ include 'controlador/fecha.php';
                 <form action="#" name="asigancionbodegaproducto" method="post">
                     <input type="hidden" name="accionAsignacionBodegaProducto" id="accionAsignacionBodegaProducto" value="GuardarAsignacionBodegaProducto">
 
-                    <tr>
+                    <tr class="col-sm-6">
                         <th>Fecha hora &nbsp;</th>
-                        <td><input type="text" name="fechaHora_Asig" id="fechaHora_Asig" required placeholder="" readonly onpaste="return false" class="form-control"></td>
+                        <td><input type="text" name="fechaHora_Asig" id="fechaHora_Asig" required placeholder="" readonly onpaste="return false" class="form-control" disabled></td><!-- disabled = hace que se vea el icono de bloqueo -->
                     </tr>
 
+                     <tr class="col-sm-6">
+                        <th>Observacion</th>
+                        <td><textarea type="text" rows="5"  name="observacion" id="observacion" maxlength="100" required placeholder="Digite la observacion" class="form-control" onpaste="return false"></textarea> </td>
 
-                    <tr>
+                    </tr>
+
+                    <tr class="col-sm-6">
                         <?php
 include 'controlador/seleccionbodega.php';
 ?>
                          <!-- esto reparar para el select-->
-                        <th>Bodega * &nbsp;</th>
+                        <th>Bodega *&nbsp;</th>
                         <td><select  name="Bodega" id="Bodega"  maxlength="30" required class="form-control">
  <option value="0"> Seleccione Bodega... </option>
    <?php while ($row = $resultado->fetch_assoc()): ?>
@@ -48,17 +53,17 @@ endwhile;
                           <!-- esto fin del select-->
                     </tr>
 
-                      <tr>
+                      <tr class="col-sm-6">
 <?php
 include 'controlador/seleccionproducto.php'; // esto hace que funcione el select y muestra el tipo empleado.
 ?>
  <!-- esto inicia del select-->
-                   <th>Producto * &nbsp;</th>
+                   <th>Producto *&nbsp;</th>
                         <td><select  name="Producto" id="Producto"  maxlength="30" required class="form-control">
 
                    <option value="0"> Seleccione Producto... </option>
                      <?php while ($row = $resultado->fetch_assoc()): ?>
-<option value="<?php echo $row['ID_PRODUCTO']; ?>"><?php echo $row['DESCRIPCION_PRODUCTO']; ?></option>
+<option value="<?php echo $row['ID_PRODUCTO']; ?>"><?php echo $row['NOMBRE_PRODUCTO']; ?></option>
 
 <?php
 endwhile;
@@ -71,16 +76,13 @@ endwhile;
 
 
 
-                    <tr>
-                        <th>Cantidad Producto &nbsp;</th>
-                        <td><input type="text"  name="cantidad" id="cantidad" required placeholder="Digite cantidad"  class="form-control"></td>
+                    <tr class="col-sm-6">
+                        <th>Cantidad Producto</th>
+                        <td><input type="number"  name="cantidad" id="cantidad" required placeholder="Nº cantidad"  class="form-control"></td>
                     </tr>
 
 
-                    <tr>
-                        <th>Observacion Producto &nbsp;</th>
-                        <td><input type="text"  name="observacion" id="observacion" maxlength="100" required placeholder="Digite observacion del Producto" class="form-control"></td>
-                    </tr>
+
 
 
                     <tr>
@@ -105,12 +107,15 @@ endwhile;
                     <th>Fecha hora</th>
                     <th>Cantidad Producto</th>
                     <th>Observacion</th>
-                    <th colspan="2">Acciones</th>
+                    <th colspan="1">Acciones</th>
+                    <!--<th colspan="2">Acciones</th> -->
                 </tr>
 
                     <?php
 while ($row = mysqli_fetch_array($rs)) {
     ?>
+
+
                             <tr>
                                 <td><?php echo $row['ID_BODEGA'] ?></td>
                                 <td><?php echo $row['ID_PRODUCTO'] ?></td>
@@ -118,7 +123,8 @@ while ($row = mysqli_fetch_array($rs)) {
                                 <td><?php echo $row['CANTIDAD_PRODUCTO'] ?></td>
                                 <td><?php echo $row['OBSERVACION'] ?></td>
                                 <td><button class="btn btn-success" onclick="moverAsignacionBodegaProducto(<?php echo $row['ID_BODEGA'] ?>, '<?php echo $row['ID_PRODUCTO'] ?>', '<?php echo $row['FECHA_HORA_ASIG'] ?>','<?php echo $row['CANTIDAD_PRODUCTO'] ?>', '<?php echo $row['OBSERVACION'] ?>')">Modificar <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button></td>
-                                <td><button class="btn btn-danger" onclick="eliminaAsignacionBodegaProducto(<?php echo $row['ID_BODEGA'] ?>,'<?php echo $row['ID_PRODUCTO'] ?>')">Eliminar <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
+
+                                <!--<td><button class="btn btn-danger" onclick="eliminaAsignacionBodegaProducto( < ?php echo $row['ID_BODEGA'] ?>,'< ?php echo $row['ID_PRODUCTO'] ?>')">Eliminar <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td> -->
                             </tr>
                             <?php
 }

@@ -20,12 +20,13 @@ if (isset($_SESSION['usuario'])) {
             $Bodega   = $_POST['Bodega'];
             $Producto = $_POST['Producto'];
             // $fechaHora_Asig   = $_POST['fechaHora_Asig'];
-            $cantidadProducto = $_POST['cantidadProducto'];
+            $cantidadProducto = $_POST['cantidad'];
             $observacion      = $_POST['observacion'];
 
             $flag = $AsignacionBodegaProductoregistro->guardar($Bodega, $Producto, $cantidadProducto, $observacion);
             if (!$flag) {
-                echo "<script>alert('No se puede guardar la AsignacionBodegaProducto, comuniquese con el administrador')</script>";
+                //echo "<script>alert('No se puede guardar la AsignacionBodegaProducto, comuniquese con el administrador')</script>";
+                echo 'error';
             }
         } elseif ($accion == "ModificaAsignacionBodegaProducto") {
             //opciones para actualizar el registro
@@ -35,7 +36,7 @@ if (isset($_SESSION['usuario'])) {
             $Bodega   = $_POST['Bodega'];
             $Producto = $_POST['Producto'];
             // $fechaHora_Asig   = $_POST['fechaHora_Asig'];
-            $cantidadProducto = $_POST['cantidadProducto'];
+            $cantidadProducto = $_POST['cantidad'];
             $observacion      = $_POST['observacion'];
 
             $flag = $AsignacionBodegaProductoregistro->actualiza($Bodega, $Producto, $cantidadProducto, $observacion);
@@ -47,7 +48,7 @@ if (isset($_SESSION['usuario'])) {
     //cargando los tipos de usuarios que hay en la tabla ttipousuario
     include 'controlador/conecta.php';
     $sql = "SELECT  ID_BODEGA, ID_PRODUCTO, FECHA_HORA_ASIG, CANTIDAD_PRODUCTO, OBSERVACION
- FROM tasignacion_bodega_producto";
+      FROM tasignacion_bodega_producto";
     $rs = $mysqli->query($sql);
 
     include 'vista/manasignacionbodegaproducto.view.php';

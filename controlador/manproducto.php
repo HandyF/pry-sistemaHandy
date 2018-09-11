@@ -18,10 +18,12 @@ if (isset($_SESSION['usuario'])) {
 
             //$id=$_POST['idUser'];    // no guarda eso en el form.
             $TipoProducto = $_POST['TipoProducto'];
+            $NombreProd   = $_POST['NombreProd'];
+            $ImagenProd   = $_POST['ImagenProd'];
             $Descripcion  = $_POST['Descripcion'];
             $observacion  = $_POST['observacion'];
 
-            $flag = $Productoregistro->guardar($TipoProducto, $Descripcion, $observacion);
+            $flag = $Productoregistro->guardar($TipoProducto, $NombreProd, $ImagenProd, $Descripcion, $observacion);
             if (!$flag) {
                 echo "<script>alert('No se puede guardar el producto, comuniquese con el administrador')</script>";
             }
@@ -32,10 +34,12 @@ if (isset($_SESSION['usuario'])) {
 
             $id           = $_POST['idProducto'];
             $TipoProducto = $_POST['TipoProducto'];
+            $NombreProd   = $_POST['NombreProd'];
+            $ImagenProd   = $_POST['ImagenProd'];
             $Descripcion  = $_POST['Descripcion'];
             $observacion  = $_POST['observacion'];
 
-            $flag = $Productoregistro->actualiza($id, $TipoProducto, $Descripcion, $observacion);
+            $flag = $Productoregistro->actualiza($id, $TipoProducto, $NombreProd, $ImagenProd, $Descripcion, $observacion);
             if (!$flag) {
                 echo "<script>alert('No se puede actualizar el producto, comuniquese con el administrador')</script>";
             }
@@ -43,7 +47,7 @@ if (isset($_SESSION['usuario'])) {
     }
     //cargando los tipos de usuarios que hay en la tabla ttipousuario
     include 'controlador/conecta.php';
-    $sql = "SELECT ID_PRODUCTO as Identificador, ID_TIPO_PRODUCTO, DESCRIPCION_PRODUCTO, OBSERVACION FROM tproducto";
+    $sql = "SELECT ID_PRODUCTO as Identificador, ID_TIPO_PRODUCTO, NOMBRE_PRODUCTO, IMAGEN_PRODUCTO, DESCRIPCION_PRODUCTO, OBSERVACION_PRODUCTO FROM tproducto";
     $rs  = $mysqli->query($sql);
 
     include 'vista/manproducto.view.php';

@@ -5,7 +5,7 @@
 include 'vista/menuRecepcion.view.php';
 ?>
         </div>
-        <div class="col-sm-10">
+        <div class="col-sm-12">
                   <?php
 include 'controlador/fecha.php';
 ?>
@@ -28,13 +28,20 @@ include 'controlador/fecha.php';
                     <input type="hidden" name="accionRecepcion" id="accionRecepcion" value="GuardarRecepcion">
                     <input type="hidden" name="idRecepcion" id="idRecepcion" value="0">
 
-                    <tr>
+                    <tr class="col-sm-6">
                          <!-- esto reparar para el select-->
                         <th>Empleado * &nbsp;</th>
                         <td><input type="text" name="Empleado" id="Empleado" maxlength="30" required placeholder="Nombre empleado" class="form-control" onpaste="return false"></td>
                     </tr>
 
-                    <tr>
+                  <tr class="col-sm-6">
+                        <th>Fecha hora &nbsp;<span class="glyphicon glyphicon-calendar"></span></th>
+                        <td><input type="text" name="fechaHora" id="fechaHora" required readonly onpaste="return false" placeholder="" class="form-control" disabled></td><!-- disabled = hace que se vea el icono de bloqueo -->
+                    </tr>
+
+
+
+                    <tr class="col-sm-6">
                         <?php
 include 'controlador/selecciontipodocumento.php'; // esto hace que funcione el select y muestra el tipo documento.
 ?>
@@ -53,18 +60,15 @@ endwhile;
                           <!-- esto fin del select-->
                     </tr>
 
-                     <tr>
+                     <tr class="col-sm-6">
                         <th>Numero tipo documento &nbsp;</th>
                         <td><input type="text" name="numeroTipoDocumento" id="numeroTipoDocumento" maxlength="30" required placeholder="" class="form-control" onpaste="return false"></td>
                     </tr>
 
-                     <tr>
-                        <th>Fecha hora &nbsp;<span class="glyphicon glyphicon-calendar"></span></th>
-                        <td><input type="text" name="fechaHora" id="fechaHora" required readonly onpaste="return false" placeholder="" class="form-control"></td>
-                    </tr>
 
 
-                   <tr>
+
+                   <tr class="col-sm-6">
                         <?php
 include 'controlador/seleccionbodega.php'; // esto hace que funcione el select y muestra bodega.
 ?>
@@ -87,7 +91,7 @@ endwhile;
 
 
 
-                       <tr>
+                       <tr class="col-sm-6">
                         <?php
 include 'controlador/seleccionproducto.php'; // esto hace que funcione el select y muestra el producto.
 ?>
@@ -97,7 +101,7 @@ include 'controlador/seleccionproducto.php'; // esto hace que funcione el select
  <option value="0"> Seleccione Producto ... </option>
 
    <?php while ($row = $resultado->fetch_assoc()): ?>
-<option value="<?php echo $row['ID_PRODUCTO']; ?>"><?php echo $row['DESCRIPCION_PRODUCTO']; ?></option>
+<option value="<?php echo $row['ID_PRODUCTO']; ?>"><?php echo $row['NOMBRE_PRODUCTO']; ?></option>
 
    <?php
 endwhile;
@@ -107,19 +111,19 @@ endwhile;
 
                    </tr>
 
-                    <tr>
+                    <tr class="col-sm-6">
                         <th>Cantidad Producto &nbsp;</th>
                         <td><input type="text" name="cantidad" id="cantidad" required onpaste="return false" onkeypress="return soloNumeros(event)" placeholder="Digite cantidad" class="form-control"></td>
                     </tr>
 
 
-                    <tr>
+                    <tr class="col-sm-6">
                         <th>Item recepcion &nbsp;</th>
                         <td><input type="text" name="itemRecep" id="itemRecep" required onpaste="return false" onkeypress="return soloNumeros(event)" placeholder="Digite Nº detalle" class="form-control"></td>
                     </tr>
 
 
-                      <tr>
+                      <tr class="col-sm-6">
                         <th>Linea de codigo &nbsp;</th>
                         <td><input type="text" name="lineaCodigo" id="lineaCodigo" required onpaste="return false" onkeypress="return soloNumeros(event)" placeholder="Digite Nº detalle" class="form-control"></td>
                     </tr>
@@ -145,12 +149,12 @@ endwhile;
             <table class="table">
                 <tr>
                     <th>Identificador</th>
-                    <th>Empleado</th>
-                    <th>Tipo documento</th>
+                   <!-- <th>Empleado</th> -->
+                   <!-- <th>Tipo documento</th> -->
                     <th>Fecha hora</th>
-                    <th>Nº tipo documento</th>
+                  <!--  <th>Nº tipo documento</th>  -->
 
-                    <th>Item</th>
+                    <th>Item recepcion</th>
                     <!--th>codigoRecep</th-->
                     <th>Bodega</th>
                     <th>Producto</th>
@@ -162,25 +166,26 @@ endwhile;
 
                     <?php
 while ($row = mysqli_fetch_array($rs)):
-?>
-                            <tr>
-                                <td><?php echo $row['Identificador'] ?></td>
-                                <td><?php echo $row['ID_EMPLEADO'] ?></td>
-                                <td><?php echo $row['ID_TIPO_DOCUMENTO'] ?></td>
-                                <td><?php echo $row['FECHA_HORA'] ?></td>
-                                <td><?php echo $row['NUMERO_TIPO_DOCUMENTO'] ?></td>
+    //var_dump($rs)
+    ?>
+                                                                             <tr>
+                                                                         <td><?php echo $row['ID_RECEPCION'] ?></td>
+                                                                  <!--  <td><-?php echo $row['ID_EMPLEADO'] ?></td> -->
+                                                             <!--  <td><-?php echo $row['ID_TIPO_DOCUMENTO'] ?></td> -->
+                                                                         <td><?php echo $row['FECHA_HORA_ASIG'] ?></td>
+                                                     <!-- <td><-?php echo $row['NUMERO_TIPO_DOCUMENTO'] ?></td> -->
 
-                                <td><?php echo $row['ITEM_RECEPCION'] ?></td>
-                                <td><?php echo $row['ID_BODEGA'] ?></td>
-                                <td><?php echo $row['ID_PRODUCTO'] ?></td>
-                                <td><?php echo $row['CANTIDAD_PRODUCTO'] ?></td>
-                                <td><?php echo $row['LINEA_CODIGO'] ?></td>
+                                                                         <td><?php echo $row['ITEM_RECEPCION'] ?></td>
+                                                                         <td><?php echo $row['ID_BODEGA'] ?></td>
+                                                                         <td><?php echo $row['ID_PRODUCTO'] ?></td>
+                                                                         <td><?php echo $row['CANTIDAD_PRODUCTO'] ?></td>
+                                                                         <td><?php echo $row['LINEA_CODIGO'] ?></td>
 
 
-                                <td><button class="btn btn-success" onclick="moverRecepcion(<?php echo $row['Identificador'] ?>,'<?php echo $row['ID_EMPLEADO'] ?>', '<?php echo $row['ID_TIPO_DOCUMENTO'] ?>','<?php echo $row['FECHA_HORA'] ?>', '<?php echo $row['NUMERO_TIPO_DOCUMENTO'] ?>', '<?php echo $row['ITEM_RECEPCION'] ?>', '<?php echo $row['ID_BODEGA'] ?>', '<?php echo $row['ID_PRODUCTO'] ?>', '<?php echo $row['CANTIDAD_PRODUCTO'] ?>', '<?php echo $row['LINEA_CODIGO'] ?>')">Modificar <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button></td>
-                                <td><button class="btn btn-danger" onclick="eliminaRecepcion(<?php echo $row['Identificador'] ?>,'<?php echo $row['ITEM_RECEPCION'] ?>')">Eliminar <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
-                            </tr>
-                           <?php
+                                                        <td><button class="btn btn-success" onclick="moverRecepcion(<?php echo $row['ID_RECEPCION'] ?>,'<?php echo $row['FECHA_HORA_ASIG'] ?>', '<?php echo $row['ITEM_RECEPCION'] ?>', '<?php echo $row['ID_BODEGA'] ?>', '<?php echo $row['ID_PRODUCTO'] ?>', '<?php echo $row['CANTIDAD_PRODUCTO'] ?>', '<?php echo $row['LINEA_CODIGO'] ?>')">Modificar <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button></td>
+                                                        <td><button class="btn btn-danger" onclick="eliminaRecepcion(<?php echo $row['Identificador'] ?>,'<?php echo $row['ITEM_RECEPCION'] ?>')">Eliminar <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
+                                                                         </tr>
+                                                                                       <?php
 endwhile;
 ?>
 

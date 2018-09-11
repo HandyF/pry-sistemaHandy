@@ -35,9 +35,9 @@
           </tr>
         </form>
       </table>
+       <div class="row text-center top-margin-md"> <a href="vista/recuperar.php" class="link">¿Olvidó su contraseña?</a> </div>
     <br>
     </div>
-
 
   </div>
 </div>

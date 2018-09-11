@@ -9,13 +9,14 @@ class Bodega//class Usuario
     public $TipoBodega;
     public $Empleado;
     public $Descripcion;
+    public $observacion;
 
     public function __construct()
     {
 
     }
 
-    public function guardar($TipoBodega, $Empleado, $Descripcion)
+    public function guardar($TipoBodega, $Empleado, $Descripcion, $observacion)
     {
         $mysqli = new mysqli("localhost", "Handy", "12345", "gestionbodega1");
         /* comprobar la conexión */
@@ -23,7 +24,7 @@ class Bodega//class Usuario
             printf("Falló la conexión: %s\n", $mysqli->connect_error);
             exit();
         }
-        $consulta = "INSERT INTO tbodega (ID_BODEGA, ID_TIPO_BODEGA, ID_EMPLEADO, DESCRIPCION_BODEGA) value (null,'" . $TipoBodega . "','" . $Empleado . "','" . $Descripcion . "')";
+        $consulta = "INSERT INTO tbodega (ID_BODEGA, ID_TIPO_BODEGA, ID_EMPLEADO, DESCRIPCION_BODEGA, OBSERVACION_BODEGA) value (null,'" . $TipoBodega . "','" . $Empleado . "','" . $Descripcion . "','" . $observacion . "')";
         $res      = $mysqli->query($consulta);
         if ($res) {
             return true;
@@ -32,10 +33,10 @@ class Bodega//class Usuario
         }
     }
 
-    public function actualiza($id, $TipoBodega, $Empleado, $Descripcion)
+    public function actualiza($id, $TipoBodega, $Empleado, $Descripcion, $observacion)
     {
         include 'controlador/conecta.php';
-        $consulta = "UPDATE tbodega SET ID_TIPO_BODEGA='" . $TipoBodega . "', ID_EMPLEADO='" . $Empleado . "', DESCRIPCION_BODEGA='" . $Descripcion . "' WHERE ID_BODEGA=" . $id;
+        $consulta = "UPDATE tbodega SET ID_TIPO_BODEGA='" . $TipoBodega . "', ID_EMPLEADO='" . $Empleado . "', DESCRIPCION_BODEGA='" . $Descripcion . "', OBSERVACION_BODEGA='" . $observacion . "' WHERE ID_BODEGA=" . $id;
         $res      = $mysqli->query($consulta);
         if ($res) {
             return true;

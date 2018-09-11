@@ -27,12 +27,13 @@ function eliminaTipoUser(id) {
 }
 // fin todo esto funciona en tipo Usuario.
 // todo esto funciona en Solicitud
-function moverSolicitud(id, Empleado, fechaHora, observacion, itemSolicit, Solicitud, Producto, cantidad, lineaCodigo) {
+function moverSolicitud(id, fechaHora, Empleado, observacion, itemSolicit, Solicitud, Producto, cantidad, lineaCodigo) {
     $("input#accionSolicitud").val("ModificaSolicitud");
     $("input#idSolicitud").val(id);
+    $("input#fechaHora").val(fechaHora);
     $("input#Empleado").val(Empleado);
     $("input#fechaHora").val(fechaHora);
-    $("input#observacion").val(observacion);
+    $("textarea#observacion").val(observacion);
     $("input#itemSolicit").val(itemSolicit);
     $("input#Solicitud").val(Solicitud); //Solicitud
     $("select#Producto").val(Producto);
@@ -70,6 +71,7 @@ function moverRecepcion(id, Empleado, TipoDocumento, fechaHora, numeroTipoDocume
     $("input#idRecepcion").val(id);
     $("input#Empleado").val(Empleado);
     $("select#TipoDocumento").val(TipoDocumento);
+    $("select#Producto").val(Producto);
     $("input#fechaHora").val(fechaHora);
     $("input#numeroTipoDocumento").val(numeroTipoDocumento);
     $("input#itemRecep").val(itemRecep);
@@ -110,31 +112,31 @@ function moverAsignacionBodegaProducto(Bodega, Producto, fechaHora_Asig, cantida
     $("select#Producto").val(Producto);
     $("input#fechaHora_Asig").val(fechaHora_Asig);
     $("input#cantidad").val(cantidad);
-    $("input#observacion").val(observacion);
+    // $("input#observacion").val(observacion);
+    $("textarea#observacion").val(observacion);
 }
-
-function eliminaAsignacionBodegaProducto(id) {
-    if (confirm("¿Desea Eliminar el registro: " + id + "?")) { // Bodega,Producto
-        //comunicacion del cliente al servidor $.post()
-        $.ajax({
-            type: 'POST',
-            url: 'controlador/eliminaasignacionbodegaproducto.php',
-            data: {
-                identificador: id
-                // ID_BODEGA: Bodega
-                // ID_PRODUCTO: Producto
-            },
-            success: function(respuesta) {
-                alert(respuesta);
-            },
-            complete: function() {
-                location.reload();
-            }
-        });
-    } else {
-        alert("Registro NO ELIMINADO");
-    }
-}
+//function eliminaAsignacionBodegaProducto(id) {
+//    if (confirm("¿Desea Eliminar el registro: " + id + "?")) { // Bodega,Producto
+//        //comunicacion del cliente al servidor $.post()
+//        $.ajax({
+//            type: 'POST',
+//            url: 'controlador/eliminaasignacionbodegaproducto.php',
+//            data: {
+//                identificador: id
+// ID_BODEGA: Bodega
+// ID_PRODUCTO: Producto
+//            },
+//            success: function(respuesta) {
+//                alert(respuesta);
+//            },
+//            complete: function() {
+//                location.reload();
+//            }
+//        });
+//    } else {
+//        alert("Registro NO ELIMINADO");
+//    }
+//}
 // fin todo esto funciona en Asignacion Bodega Producto.
 /////////////
 // todo esto funciona en Salida
@@ -317,14 +319,16 @@ function eliminaTipoEmpleado(id) {
 }
 // fin todo esto funciona en tipo Empleado.
 // todo esto funciona en Empleado
-function moverEmpleado(id, TipoEmpleado, rut, nombres, apellidos, fechaNacimiento, direccion, fono, mail) {
+function moverEmpleado(id, TipoEmpleado, rut, nombres, apellidoPater, apellidoMater, fechaNacimiento, genero, direccion, fono, mail) {
     $("input#accionEmpleado").val("ModificaEmpleado");
     $("input#idEmpleado").val(id);
     $("select#TipoEmpleado").val(TipoEmpleado);
     $("input#rut").val(rut);
     $("input#nombres").val(nombres);
-    $("input#apellidos").val(apellidos);
+    $("input#apellidoPater").val(apellidoPater);
+    $("input#apellidoMater").val(apellidoMater);
     $("input#fechaNacimiento").val(fechaNacimiento);
+    $("input#genero").val(genero);
     $("input#direccion").val(direccion);
     $("input#fono").val(fono);
     $("input#mail").val(mail);
@@ -352,12 +356,16 @@ function eliminaEmpleado(id) {
 }
 //fin todo esto funciona en Empleado
 // todo esto funciona en Producto
-function moverProducto(id, TipoProducto, Descripcion, observacion) {
+function moverProducto(id, TipoProducto, NombreProd, ImagenProd, Descripcion, observacion) {
     $("input#accionProducto").val("ModificaProducto");
     $("input#idProducto").val(id);
     $("select#TipoProducto").val(TipoProducto);
-    $("input#Descripcion").val(Descripcion);
-    $("input#observacion").val(observacion);
+    $("input#NombreProd").val(NombreProd);
+    $("img#ImagenProd").val(ImagenProd);
+    // $("input#Descripcion").val(Descripcion);
+    $("textarea#Descripcion").val(Descripcion);
+    //$("input#observacion").val(observacion);
+    $("textarea#observacion").val(observacion);
 }
 
 function eliminaProducto(id) {
@@ -382,12 +390,14 @@ function eliminaProducto(id) {
 }
 //fin todo esto funciona en Producto
 // todo esto funciona en Bodega
-function moverBodega(id, TipoBodega, Empleado, Descripcion) {
+function moverBodega(id, TipoBodega, Empleado, Descripcion, observacion) {
     $("input#accionBodega").val("ModificaBodega");
     $("input#idBodega").val(id);
     $("select#TipoBodega").val(TipoBodega);
     $("input#Empleado").val(Empleado);
     $("input#Descripcion").val(Descripcion);
+    // $("input#observacion").val(observacion);
+    $("textarea#observacion").val(observacion);
 }
 
 function eliminaBodega(id) {

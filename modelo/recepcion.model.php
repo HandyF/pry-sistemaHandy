@@ -32,7 +32,7 @@ class Recepcion//class Usuario
         //     printf("Falló la conexión: %s\n", $mysqli->connect_error);
         //     exit();
         // }
-        include 'controlador/conecta.php';
+        include $_SERVER['DOCUMENT_ROOT'] . '/pry-sistemaHandy/controlador/conecta.php';
         $consulta = "INSERT INTO trecepcion (ID_RECEPCION, ID_EMPLEADO, ID_TIPO_DOCUMENTO, FECHA_HORA, NUMERO_TIPO_DOCUMENTO) value (null,'" . $Empleado . "','" . $TipoDocumento . "', now(),'" . $numeroTipoDocumento . "')";
 
         $consultaDetalle = "INSERT INTO tdetalle_recepcion (ITEM_RECEPCION, ID_RECEPCION, ID_BODEGA, ID_PRODUCTO, FECHA_HORA_ASIG, CANTIDAD_PRODUCTO, LINEA_CODIGO) value ('" . $itemRecep . "','" . $Recepcion . "','" . $Bodega . "', '" . $Producto . "','now(),'" . $cantidad . "','" . $lineaCodigo . "')";

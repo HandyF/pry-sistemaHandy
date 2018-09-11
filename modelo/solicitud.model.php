@@ -30,8 +30,8 @@ class Solicitud//class Usuario
         //     printf("Falló la conexión: %s\n", $mysqli->connect_error);
         //     exit();
         //  }
-        include 'controlador/conecta.php';
-        $consulta = "INSERT INTO tsolicitud (ID_SOLICITUD, ID_EMPLEADO, FECHA_HORA, OBSERVACION) value (null,'" . $Empleado . "', now(),'" . $observacion . "')";
+        include $_SERVER['DOCUMENT_ROOT'] . '/pry-sistemaHandy/controlador/conecta.php';
+        $consulta = "INSERT INTO tsolicitud (ID_SOLICITUD, ID_EMPLEADO, FECHA_HORA, OBSERVACION_SOLICITUD) value (null,'" . $Empleado . "', now(),'" . $observacion . "')";
 
         $consultaDetalle = "INSERT INTO tdetalle_solicitud (ITEM_SOLICITUD, ID_SOLICITUD, ID_PRODUCTO, FECHA_HORA_ASIG, CANTIDAD_PRODUCTO, LINEA_CODIGO) value ('" . $itemSolicit . "','" . $Solicitud . "','" . $Producto . "', now(),'" . $cantidad . "','" . $lineaCodigo . "')";
 
@@ -46,7 +46,7 @@ class Solicitud//class Usuario
     public function actualiza($id, $Empleado, $observacion, $itemSolicit, $Solicitud, $Producto, $cantidad, $lineaCodigo)
     {
         include 'controlador/conecta.php';
-        $consulta = "UPDATE tsolicitud SET ID_EMPLEADO='" . $Empleado . "', FECHA_HORA=now(), OBSERVACION='" . $observacion . "' WHERE ID_SOLICITUD=" . $id;
+        $consulta = "UPDATE tsolicitud SET ID_EMPLEADO='" . $Empleado . "', FECHA_HORA=now(), OBSERVACION_SOLICITUD='" . $observacion . "' WHERE ID_SOLICITUD=" . $id;
 
         $consultaDetalle = "UPDATE tdetalle_solicitud SET ITEM_SOLICITUD='" . $itemSolicit . "', ID_SOLICITUD='" . $Solicitud . "', ID_PRODUCTO='" . $Producto . "', FECHA_HORA_ASIG=now(), CANTIDAD_PRODUCTO='" . $cantidad . "' , LINEA_CODIGO='" . $lineaCodigo . "' WHERE ITEM_SOLICITUD=" . $itemSolicit;
 
@@ -76,7 +76,7 @@ class Solicitud//class Usuario
         }
     }
 
-    // métodos propios implementados
+// métodos propios implementados
     public function valida_user_pass($user, $pass)
     {
         $mysqli = new mysqli("localhost", "Handy", "12345", "gestionbodega1");

@@ -25,16 +25,16 @@ include 'controlador/fecha.php';
 					<input type="hidden" name="idUser" id="idUser" value="0">
 
 
-                      <tr>
+                      <tr class="col-sm-6">
                       	<?php
 include 'controlador/selecciontipouser.php'; // esto hace que funcione el select y muestra el tipo usuario.
 
 ?>
                          <!-- esto reparar para el select-->
-                        <th>Tipo Usuario * &nbsp;</th>
+                        <th>Tipo Usuario *&nbsp;</th>
                         <td><select  name="TipoUsuario" id="TipoUsuario" required class="form-control">
 
- <option value="0">Seleccione Tipo Usuario ..</option>
+ <option value="0">Seleccione Tipo Usuario..</option>
 
    <?php while ($row = $resultado->fetch_assoc()): ?>
 <option value="<?php echo $row['ID_TIPO_USUARIO']; ?>"><?php echo $row['DESCRIPCION']; ?></option>
@@ -47,13 +47,13 @@ endwhile;
                           <!-- esto fin del select-->
                     </tr>
 
-                     <tr>
+                     <tr class="col-sm-6">
                      	<?php
 include 'controlador/seleccionempleado.php'; // esto hace que funcione el select y muestra el tipo usuario.
 
 ?>
                          <!-- esto reparar para el select-->
-                        <th>Empleado * &nbsp;</th>
+                        <th>Empleado *&nbsp;</th>
                         <td><select  name="Empleado" id="Empleado"  required class="form-control">
                              <option value="0">Seleccione Empleado ..</option>
                                  <?php while ($row = $resultado->fetch_assoc()): ?>
@@ -69,13 +69,13 @@ endwhile;
                     </tr>
 
 
-					<tr>
+					<tr class="col-sm-8">
 						<th>Nombre Usuario &nbsp;<span class="glyphicon glyphicon-user"></span></th>
 						<td><input type="text" name="Descripcion" id="Descripcion" maxlength="50" required placeholder="Digite nombre usuario" class="form-control" onpaste="return false"></td>
 					</tr>
 
 
-	                 <tr>
+	                 <tr class="col-sm-6">
 						<th>Contrase&ntilde;a &nbsp;<span class="glyphicon glyphicon-lock"></span></th><td><input type="password" name="contrasena" id="contrasena" required placeholder="Digite contraseña" onpaste="return false" maxlength="50" class="form-control">
                                       <i>(Digite hasta un máximo 50 caracteres)</i>
                                       <br/>
@@ -87,8 +87,8 @@ endwhile;
 					</script> -->
 
 
-					<tr>
-						<th>Repita Contrase&ntilde;a &nbsp;<span class="glyphicon glyphicon-lock"></span></th><td><input type="password" name="recontrasena" id="recontrasena" required placeholder="Digite otra vez la contraseña" onpaste="return false" maxlength="50"  class="form-control">
+					<tr class="col-sm-6">
+						<th>Repita Contrase&ntilde;a &nbsp;<span class="glyphicon glyphicon-lock"></span></th><td style="width:100%"><input type="password" name="recontrasena" id="recontrasena" required placeholder="Digite otra vez la contraseña" onpaste="return false" maxlength="50"  class="form-control">
                                            <i>
                                              (Digite otra vez la contraseña)
                                            </i>
