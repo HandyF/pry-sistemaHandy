@@ -97,6 +97,15 @@ endwhile;
                  <!--  <script>
 						document.getElementById("recontrasena").maxLength = "50";
 					</script> -->
+                   <tr class="col-sm-6 radio">
+						<th>Estado Usuario &nbsp;</th><td style="width:100%"><br>
+						<label><input type="radio" name="optradio" checked>Habilitar Acceso Usuario</label>
+						<label><input type="radio" name="optradio" checked>Bloquear Acceso Usuario</label>
+						<br>
+
+						</td>
+					</tr>
+
 
 					<tr>
 						<td align="center">
